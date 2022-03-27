@@ -1,0 +1,17 @@
+body {
+    background-color: rgb(224, 224, 224);
+}
+
+.main {
+    margin: 0 auto;
+    width: 50%;
+    background-color: white;
+}
+
+.chat_div {
+    min-height: 400px;
+}
+
+.main_input, .main_btn {
+    width: 100%;
+}
