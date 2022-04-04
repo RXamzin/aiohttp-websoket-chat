@@ -9,7 +9,8 @@ body {
 }
 
 .chat_div {
-    min-height: 400px;
+    max-height: 400px;
+    overflow-y: scroll;
 }
 
 .main_input, .main_btn {
