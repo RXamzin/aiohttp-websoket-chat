@@ -14,8 +14,9 @@
 <body>
     <div class="main">
         <div class="chat_div rounded border border-primary"></div>
-        <input class='main_input form-control' type="text" placeholder="Enter your name">
-        <button class='main_btn btn btn-primary'>JOIN</button>
+        <input class='main_input form-control name_input' type="text" placeholder="Enter your name">
+        <button class='main_btn btn btn-primary join_btn'>JOIN</button>
+        <button class='main_btn btn btn-primary exit_btn' style="display: none;">EXIT</button>
     </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -27,5 +28,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
+<script src="{{ url('static', filename='js/main.js') }}"></script>
 
 </html>
