@@ -14,11 +14,6 @@ $(document).on('click', '.exit_btn', (e) => {
     $('.join_btn').show()
 })
 
-/*             <div class="message">
-                <strong>USER:</strong>
-                <p>Some message</p>
-            </div>  */
-
 function create_and_connect_to_websocket(name) {
     let ws = new WebSocket('ws://' + window.location.host + '/ws')
     ws.onopen = function() {
@@ -28,7 +23,14 @@ function create_and_connect_to_websocket(name) {
         ws.send(JSON.stringify(msg))
     }
     ws.onmessage = function (event) {
-        console.log(event.data);
+        let msg_data = JSON.parse(event.data);
+
+        let html = '';
+        html += '<div class="message">';
+        html += `<strong>${msg_data['USERNAME']}:</strong>`;
+        html += `<p>${msg_data['MESSAGE']}</p>`;
+        html += '</div>';
+        $('.chat_div').append(html)
       }
     return ws
 }

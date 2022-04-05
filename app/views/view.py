@@ -16,15 +16,15 @@ async def chat(request):
 
     all_ws = request.app.get('WEBSOCKETS')
     all_ws.add(ws)
-    print(all_ws)
+
     async for message in ws:
         if message.type == aiohttp.WSMsgType.TEXT:
             message_json = json.loads(message.data)
-            print(message_json)
+
             if message_json['TYPE'] == 'EXIT':
                 await ws.close()
             elif message_json['TYPE'] == 'CONNECTION':
-                print('here')
+
                 response = {'USERNAME': message_json['USERNAME'],
                             'MESSAGE': 'CONNECTED'}
                 for recipient in all_ws:
@@ -35,6 +35,5 @@ async def chat(request):
             print('ws connection closed with exception %s' %
                 ws.exception())
 
-    print('websocket connection closed')
     all_ws.discard(ws)
     return ws
