@@ -15,6 +15,7 @@ async def chat(request):
 
     async for message in ws:
         if message.type == aiohttp.WSMsgType.TEXT:
+            print(message.data) 
             if message.data == 'EXIT':
                 await ws.close()
             elif message.type == aiohttp.WSMsgType.ERROR:
