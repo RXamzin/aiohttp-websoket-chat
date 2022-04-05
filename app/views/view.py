@@ -1,3 +1,4 @@
+import json
 import aiohttp_jinja2
 from aiohttp import web
 import aiohttp
@@ -13,14 +14,24 @@ async def chat(request):
 
     await ws.prepare(request)
 
+    all_ws = request.app.get('WEBSOCKETS', [])
+    all_ws.append(ws)
     async for message in ws:
         if message.type == aiohttp.WSMsgType.TEXT:
-            print(message.data) 
-            if message.data == 'EXIT':
+            message_json = json.loads(message.data)
+            
+            if message_json['TYPE'] == 'EXIT':
                 await ws.close()
-            elif message.type == aiohttp.WSMsgType.ERROR:
-                print('ws connection closed with exception %s' %
-                  ws.exception())
+            elif message_json['TYPE'] == 'CONNECTION':
+                response = {'NAME': message_json['NAME'],
+                            'MESSAGE': 'CONNECTED'}
+                for recipient in all_ws:
+                    if recipient != ws:
+                        await recipient.send_json(response)
+                        
+        elif message.type == aiohttp.WSMsgType.ERROR:
+            print('ws connection closed with exception %s' %
+                ws.exception())
 
     print('websocket connection closed')
 
