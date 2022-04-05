@@ -32,7 +32,9 @@ async def chat(request):
                             'MESSAGE': 'CONNECTED'}
 
             elif message_json['TYPE'] == 'MESSAGE':
-                pass
+                
+                response = {'USERNAME': message_json['USERNAME'],
+                            'MESSAGE': message_json['MESSAGE']}
 
             for recipient in all_ws:
                 if recipient != ws:
@@ -43,4 +45,11 @@ async def chat(request):
                 ws.exception())
 
     all_ws.discard(ws)
+
+    response = {'USERNAME': message_json['USERNAME'],
+                'MESSAGE': 'DISCONNECTED'}
+
+    for recipient in all_ws:
+        await recipient.send_json(response)
+        
     return ws
