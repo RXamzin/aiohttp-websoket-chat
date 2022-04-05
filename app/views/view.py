@@ -22,14 +22,21 @@ async def chat(request):
             message_json = json.loads(message.data)
 
             if message_json['TYPE'] == 'EXIT':
+
                 await ws.close()
+                break
+
             elif message_json['TYPE'] == 'CONNECTION':
 
                 response = {'USERNAME': message_json['USERNAME'],
                             'MESSAGE': 'CONNECTED'}
-                for recipient in all_ws:
-                    if recipient != ws:
-                        await recipient.send_json(response)
+
+            elif message_json['TYPE'] == 'MESSAGE':
+                pass
+
+            for recipient in all_ws:
+                if recipient != ws:
+                    await recipient.send_json(response)
 
         elif message.type == aiohttp.WSMsgType.ERROR:
             print('ws connection closed with exception %s' %
