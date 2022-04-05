@@ -27,5 +27,10 @@ function create_and_connect_to_websocket(name) {
         msg['USERNAME'] = name
         ws.send(JSON.stringify(msg))
     }
+    ws.onmessage = function (event) {
+        console.log(event.data);
+      }
     return ws
 }
+
+function recieve_msg() {}

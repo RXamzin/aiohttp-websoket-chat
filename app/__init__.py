@@ -11,5 +11,6 @@ def create_app():
     app = web.Application()
     logging.basicConfig(level=logging.DEBUG)
     aiohttp_jinja2.setup(app, loader=jinja2.FileSystemLoader(os.path.join(BASE_DIR, 'templates')))
+    app['WEBSOCKETS'] = set()
     set_up_routes(app)
     return app
