@@ -3,18 +3,10 @@ from sqlalchemy.orm import declarative_base
 
 Base = declarative_base()
 
-async def on_start_up(app):
-    engine = create_async_engine(
-        app.CONFIG.DB_URL
-    )
-    
-    session = AsyncSession(engine, expire_on_commit=False)
+def get_db_engine(url):
+    return create_async_engine(url)
 
-    app.db = session
-    app.db_engine = engine
-    
+def get_db_session(engine):
+    return AsyncSession(engine, expire_on_commit=False)
 
-async def on_shutdown(app):
-    
-    await app.db.close()
-    await app.db_engine.dispose()
+from app.models.user import User

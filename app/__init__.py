@@ -1,12 +1,29 @@
 from app.config import BASE_DIR, Config
 from app.routes import set_up_routes
-from app.tools.db import on_start_up, on_shutdown
+from app.tools.db import get_db_engine, get_db_session
 
 import os
 import logging
 from aiohttp import web
 import aiohttp_jinja2
 import jinja2
+
+
+async def on_start_up(app):
+    engine = get_db_engine(
+        app.CONFIG.DB_URL
+    )
+    
+    session = get_db_session(engine)
+
+    app.db = session
+    app.db_engine = engine
+    
+
+async def on_shutdown(app):
+    
+    await app.db.close()
+    await app.db_engine.dispose()
 
 
 def create_app():
