@@ -3,7 +3,6 @@ from app.tools.db import get_db_engine, Base
 from app.config import Config
 
 import click
-import os
 
 
 @click.group()
